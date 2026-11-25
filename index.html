@@ -205,8 +205,10 @@
 
     var F = [['v', '랜딩 방문'], ['c', '체험 버튼 클릭'], ['l', '상담 신청'], ['s', '가입'], ['p', '유료결제']];
     var vals = F.map(function (f) { return sum(days, ms, f[0]); });
+    // Each step is shown as a share of the step right before it.
+    var BASE = ['', '방문', '버튼 클릭', '상담 신청', '가입'];
     $('funnel').innerHTML = F.map(function (f, i) {
-      return '<div class="step"><div class="t">' + f[1] + '</div><div class="n">' + won(vals[i]) + '</div><div class="r">' + (i ? '방문 대비 ' + pct(vals[i], vals[0]) : '&nbsp;') + '</div></div>';
+      return '<div class="step"><div class="t">' + f[1] + '</div><div class="n">' + won(vals[i]) + '</div><div class="r">' + (i ? BASE[i] + ' 대비 ' + pct(vals[i], vals[i - 1]) : '&nbsp;') + '</div></div>';
     }).join('');
 
     var allLeads = sum(days, MEDIA, 'l');
